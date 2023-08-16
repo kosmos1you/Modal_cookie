@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal - cookie</title>
+</head>
+
+<body>
+    <!--  -->
+    <style>
+        .modal-wrapper {
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            position: fixed;
+            top: 0;
+            align-items: center;
+            display: flex;
+            background: #0b0b0b59;
+        }
+
+        .modal-row {
+            margin: 0 auto;
+            height: 250px;
+            width: 400px;
+            border: 1px solid #eae3e3;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            background: #fff;
+        }
+
+        .modal-title {
+            font-size: 25px;
+            margin-bottom: 15px;
+        }
+
+        .modal_btn {
+            font-size: 18px;
+        }
+
+        .close {
+            position: absolute;
+            top: 5px;
+            right: 15px;
+            font-size: 17px;
+            font-weight: inherit;
+            cursor: pointer;
+        }
+
+        .modal-wrapper.open {
+            display: block;
+        }
+
+        .modal-wrapper.none {
+            display: none !important;
+        }
+
+        .block {
+            display: none;
+        }
+    </style>
+    <!--  -->
+    <!-- Если код не будет работать подключить Jquery--->
+    <h2>Ссылка на форум - <a
+            href="https://www.cyberforum.ru/javascript-jquery/thread2579468.html?ysclid=lldect3gng544306841"> Ссылка</a>
+    </h2>
+
+    <div class="modal-wrapper block">
+
+        <div class="modal-row">
+            <div class="close">X</div>
+            <p class="modal-title">У нас открылся новый сайт</p>
+            <a class="modal_btn" href="http://fitlj.fit-l.ru/">Перейти на сайт</a>
+        </div>
+    </div>
+
+    <!--  -->
+    <script type="text/javascript">
+        "use strict";
+        
+        let close = document.querySelector('.close');
+        let modal = document.querySelector('.modal-wrapper');
+        // закрытие окна по клику на крест
+        close.onclick = function () {
+            modal.classList.add('none');
+        }
+        //начало функции с куки
+        const populLoad = 'popupLoad';
+        
+        function getPopupTime(popupLoad) {
+            let time = new Date().getTime();
+            if (localStorage.getItem(popupLoad)) {
+                time -= localStorage.getItem(popupLoad);
+                console.log(time);
+            } else {
+                localStorage.setItem(popupLoad, time);
+            }
+            return time;
+        }
+
+        // 60000 - 1 минута 
+        // 3600000 - 1 час
+
+        if (getPopupTime(populLoad) > 3600000) {
+            document.getElementsByClassName("block")[0].style.display = "flex";
+            localStorage.setItem(populLoad, new Date().getTime()); // Обновляем после появления блока..
+        }
+
+    </script>
+</body>
+
+</html>
